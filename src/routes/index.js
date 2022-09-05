@@ -1,6 +1,6 @@
 import sanityClient from '@sanity/client';
 
-const client = sanityClient({
+export const client = sanityClient({
     projectId: "tun1nqnk",
     dataset: "production",
     apiVersion: "2022-08-21",
@@ -8,13 +8,17 @@ const client = sanityClient({
   });
 
 export async function GET() {
-    const data = await client.fetch(`*[_type == "item"]`);
+    const videos = await client.fetch(`*[_type == "video"] | order(order asc)`);
+    const audio = await client.fetch(`*[_type == "audio"] | order(order asc)`);
+    const live = await client.fetch(`*[_type == "live"] | order(order asc)`);
 
-    if (data) {
+    if (videos && audio && live) {
         return {
             status: 200,
             body: {
-                items: data
+                "Video": videos,
+                "Audio": audio,
+                "Live": live
             }
         };
     }
