@@ -1,13 +1,30 @@
 <script>
+	import imageUrlBuilder from '@sanity/image-url';
+	import { client } from './index.js';
 	export let item;
+
+	const builder = imageUrlBuilder(client);
+
+	function urlFor(source) {
+		return builder.image(source);
+	}
+
+	console.log('link', item.link);
 
 	const handleClick = () => {
 		window.open(item.link, '_blank');
 	};
 </script>
 
-<div class="item-container" class:mobile={window.innerWidth <= 515} on:click={handleClick}>
-	{#if !item.thumbnail}
+<div
+	class="item-container"
+	class:mobile={window.innerWidth <= 515}
+	class:tablet={window.innerWidth <= 1050}
+	on:click={handleClick}
+>
+	{#if !item.thumbnail && !item.link.includes('youtu')}
+		<img src="src/imhLoopedPoster.png" class="thumbnail" alt="{item.title} thumbnail" />
+	{:else if !item.thumbnail && item.link.includes('youtu')}
 		<img
 			src="https://img.youtube.com/vi/{item.link?.split('/').at(-1)}/hqdefault.jpg"
 			class="thumbnail"
@@ -15,15 +32,11 @@
 			alt="{item.title} video thumbnail"
 		/>
 	{:else}
-		<img
-			src={item.thumbnail}
-			class:mobile={window.innerWidth <= 515}
-			class="thumbnail"
-			alt="temp alt"
-		/>
+		<img src={urlFor(item.thumbnail).url()} class="thumbnail" alt="temp alt" />
 	{/if}
-	<div class="item-info" class:mobile={window.innerWidth <= 515}>
-		<h4 class="item-title">{item.title}</h4>
+
+	<div class="item-info">
+		<h3 class="item-title">{item.title}</h3>
 		<div class="item-description">{item.description}</div>
 	</div>
 </div>
@@ -31,44 +44,48 @@
 <style>
 	.item-container {
 		display: flex;
-		justify-content: flex-start;
+		flex-direction: column;
+		justify-content: space-evenly;
+		align-items: center;
 		font-family: 'Rubik';
-		font-size: 1.3em;
-		height: auto;
-		width: 90%;
+		/* font-size: 1.3em; */
 		color: #ffffff;
 		text-align: center;
-		margin-top: 1rem;
-		margin-bottom: 1rem;
+		width: 40%;
+		height: 38%;
+		margin: 0.5rem;
 		box-shadow: -1px 5px 7px 0px #093042;
 		background: linear-gradient(to bottom, #2dabf9 5%, #0688fa 100%);
 		background-color: #2dabf9;
 		border-radius: 8px;
 		border: 1px solid #0b0e07;
-		padding: 0.4rem 2rem;
+		padding: 1rem;
 		text-decoration: none;
+		text-align: center;
 		text-shadow: 0px 0px 0px #263666;
 	}
+
 	.item-container:hover {
 		color: rgb(0, 0, 0, 1);
 		cursor: pointer;
 		background-color: #0688fa;
 	}
 
+	.item-container.tablet {
+		padding: 0.5rem;
+	}
+
 	.item-info {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		align-items: flex-start;
-		margin-left: 1rem;
+		align-items: center;
+		width: 100%;
+		margin: 0.4rem;
 	}
 
 	.item-title {
-		align-self: flex-start;
-		margin-top: 0;
-		margin-bottom: 0.5rem;
-		overflow: hidden;
-		display: block;
+		margin: 0;
 	}
 
 	.item-description {
@@ -76,34 +93,22 @@
 	}
 
 	.thumbnail {
-		max-width: 22%;
-		width: 60%;
-		height: 100%;
+		width: 75%;
+		height: 75%;
 		border-radius: 8px;
 		object-fit: cover;
 	}
 
-	.item-container.mobile {
-		flex-direction: column;
-		align-items: center;
+	.mobile {
 		margin: 0.5rem 1rem;
 		width: 75%;
 	}
 
-	.item-container.mobile:first-child {
+	.mobile:first-child {
 		margin-top: 0;
 	}
 
-	.item-container.mobile:last-child {
+	.mobile:last-child {
 		margin-bottom: 0;
-	}
-
-	.item-info.mobile {
-		align-items: center;
-	}
-
-	.thumbnail.mobile {
-		min-width: 80%;
-		height: auto;
 	}
 </style>

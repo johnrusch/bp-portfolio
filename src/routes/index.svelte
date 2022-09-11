@@ -3,6 +3,7 @@
 	import { fly } from 'svelte/transition';
 	import { tabs } from './Nav.svelte';
 	import MediaQuery from '../MediaQuery.svelte';
+	import View from './view.svelte';
 
 	let selected;
 	let selectedIdx;
@@ -76,7 +77,13 @@
 		</OnMount>
 
 		{#if selected}
-			<svelte:component this={selected.component} class="default" items={$$props[selected.name]} clickOutside={clickOutside} handleClose={handleClose}/>
+			<View
+				class="default"
+				items={$$props[selected.name]}
+				{clickOutside}
+				{handleClose}
+				contact={selected.name === 'Contact'}
+			/>
 		{/if}
 	{/if}
 </MediaQuery>
@@ -95,8 +102,6 @@
 			poster="src/imhLoopedPoster.png"
 		/>
 
-		<!-- <OnMount> -->
-		<!-- <div class="tablet" in:fly={{ y: 200, duration: 500, delay: 750 }} id="tab-container"> -->
 		<ul class="tablet" id="tabs">
 			{#each tabs as tab, i}
 				<li
@@ -112,7 +117,13 @@
 		</ul>
 
 		{#if selected}
-			<svelte:component this={selected.component} class="tablet" items={$$props[selected.name]} clickOutside={clickOutside} handleClose={handleClose}/>
+			<View
+				class="tablet"
+				items={$$props[selected.name]}
+				{clickOutside}
+				{handleClose}
+				contact={selected.name === 'Contact'}
+			/>
 		{/if}
 	{/if}
 </MediaQuery>
@@ -132,7 +143,6 @@
 		/>
 
 		<OnMount>
-			<!-- <div class="mobile" in:fly={{ y: 200, duration: 500, delay: 750 }} id="tab-container"> -->
 			<ul class="mobile" id="tabs">
 				{#each tabs as tab, i}
 					<li
@@ -146,10 +156,15 @@
 					</li>
 				{/each}
 			</ul>
-			<!-- </div> -->
 		</OnMount>
 		{#if selected}
-			<svelte:component this={selected.component} class="mobile" items={$$props[selected.name]} clickOutside={clickOutside} handleClose={handleClose} />
+			<View
+				class="mobile"
+				items={$$props[selected.name]}
+				{clickOutside}
+				{handleClose}
+				contact={selected.name === 'Contact'}
+			/>
 		{/if}
 	{/if}
 </MediaQuery>

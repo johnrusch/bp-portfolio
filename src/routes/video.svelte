@@ -11,9 +11,10 @@
 		on:outclick={handleClose}
 		in:fly={{ y: -200, duration: 1000 }}
 		out:fade={{ duration: 250 }}
-		class="container default"
+		class="container"
 		class:mobile={window.innerWidth <= 515}
 		class:tablet={window.innerWidth > 515 && window.innerWidth <= 1050}
+		class:default={window.innerWidth > 1050}
 	>
 		{#each items as item}
 			<AudioItem {item} />
@@ -58,7 +59,6 @@
 		z-index: 90;
 		margin-left: auto;
 		margin-right: auto;
-		padding: 1.5rem;
 		width: 75%;
 		bottom: 10%;
 	}
