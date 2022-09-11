@@ -9,16 +9,28 @@
 		return builder.image(source);
 	}
 
-	console.log(window.innerWidth <= 480);
+	console.log('link', item.link);
 
 	const handleClick = () => {
 		window.open(item.link, '_blank');
 	};
 </script>
 
-<div class="item-container" class:mobile={window.innerWidth <= 515} class:tablet={window.innerWidth <= 1050} on:click={handleClick}>
-	{#if !item.thumbnail}
+<div
+	class="item-container"
+	class:mobile={window.innerWidth <= 515}
+	class:tablet={window.innerWidth <= 1050}
+	on:click={handleClick}
+>
+	{#if !item.thumbnail && !item.link.includes('youtu')}
 		<img src="src/imhLoopedPoster.png" class="thumbnail" alt="{item.title} thumbnail" />
+	{:else if !item.thumbnail && item.link.includes('youtu')}
+		<img
+			src="https://img.youtube.com/vi/{item.link?.split('/').at(-1)}/hqdefault.jpg"
+			class="thumbnail"
+			class:mobile={window.innerWidth <= 515}
+			alt="{item.title} video thumbnail"
+		/>
 	{:else}
 		<img src={urlFor(item.thumbnail).url()} class="thumbnail" alt="temp alt" />
 	{/if}
@@ -59,9 +71,9 @@
 		background-color: #0688fa;
 	}
 
-    .item-container.tablet {
-        padding: .5rem;
-    }
+	.item-container.tablet {
+		padding: 0.5rem;
+	}
 
 	.item-info {
 		display: flex;

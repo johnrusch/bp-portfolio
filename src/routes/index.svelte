@@ -8,9 +8,35 @@
 	let selectedIdx;
 
 	const selectTab = (event) => {
-		selected = tabs[event.srcElement.id];
-		selectedIdx = parseInt(event.srcElement.id);
-		console.log('SELECTED IDX', selected.name);
+		if (!event.target.classList.contains('selected')) {
+			selected = tabs[event.srcElement.id];
+			selectedIdx = parseInt(event.srcElement.id);
+			console.log('SELECTED IDX', selected.name);
+		} else {
+			handleClose();
+		}
+	};
+
+	const clickOutside = (node) => {
+		const handleClick = (event) => {
+			if (!node.contains(event.target) && !event.target.classList.contains('tab-button')) {
+				console.log('event', event);
+				node.dispatchEvent(new CustomEvent('outclick'));
+			}
+		};
+		document.addEventListener('click', handleClick, true);
+
+		return {
+			destroy() {
+				document.removeEventListener('click', handleClick, true);
+			}
+		};
+	};
+
+	const handleClose = () => {
+		console.log('CLICKED OUTSIDE');
+		selected = null;
+		selectedIdx = null;
 	};
 
 	let videos = $$props;
@@ -50,7 +76,7 @@
 		</OnMount>
 
 		{#if selected}
-			<svelte:component this={selected.component} class="default" items={$$props[selected.name]} />
+			<svelte:component this={selected.component} class="default" items={$$props[selected.name]} clickOutside={clickOutside} handleClose={handleClose}/>
 		{/if}
 	{/if}
 </MediaQuery>
@@ -86,7 +112,7 @@
 		</ul>
 
 		{#if selected}
-			<svelte:component this={selected.component} class="tablet" items={$$props[selected.name]} />
+			<svelte:component this={selected.component} class="tablet" items={$$props[selected.name]} clickOutside={clickOutside} handleClose={handleClose}/>
 		{/if}
 	{/if}
 </MediaQuery>
@@ -123,7 +149,7 @@
 			<!-- </div> -->
 		</OnMount>
 		{#if selected}
-			<svelte:component this={selected.component} class="mobile" items={$$props[selected.name]} />
+			<svelte:component this={selected.component} class="mobile" items={$$props[selected.name]} clickOutside={clickOutside} handleClose={handleClose} />
 		{/if}
 	{/if}
 </MediaQuery>
