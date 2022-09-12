@@ -16,7 +16,7 @@
 			class:tablet={window.innerWidth > 515 && window.innerWidth <= 1050}
 			class:default={window.innerWidth > 1050}
 		>
-			<div id="close-icon crt" on:click={handleClose}>X</div>
+			<div id="close-icon" on:click={handleClose}>X</div>
 			{#if items}
 				{#each items as item}
 					<Item class="text" {item} />
@@ -116,4 +116,5 @@
 		overflow-y: scroll;
 		overflow-x: hidden;
 	}
+
 </style>
