@@ -35,7 +35,7 @@
 		<img src={urlFor(item.thumbnail).url()} class="thumbnail" alt="temp alt" />
 	{/if}
 
-	<div class="item-info crt">
+	<div class="item-info">
 		<h3 class="item-title">{item.title}</h3>
 		<div class="item-description">{item.description}</div>
 	</div>
