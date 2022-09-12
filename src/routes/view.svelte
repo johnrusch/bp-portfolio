@@ -16,7 +16,7 @@
 			class:tablet={window.innerWidth > 515 && window.innerWidth <= 1050}
 			class:default={window.innerWidth > 1050}
 		>
-			<a class="close-icon" on:click={handleClose}>X</a>
+			<div id="close-icon crt" on:click={handleClose}>X</div>
 			{#if items}
 				{#each items as item}
 					<Item class="text" {item} />
@@ -81,16 +81,18 @@
 
 	#close-icon {
 		color: #ffffff;
+		font-family: 'Menlo';
 		position: absolute;
 		top: 0.1rem;
 		right: 0.4rem;
 		width: 2rem;
 		height: 2rem;
 		margin: 0.2rem;
+		z-index: 100;
 	}
 
 	#close-icon:hover {
-		color: #5a5a5a;
+		color: white;
 		cursor: pointer;
 	}
 
