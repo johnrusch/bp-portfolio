@@ -44,6 +44,7 @@
 	console.log('ITEMS', videos);
 </script>
 
+
 <!-- default -->
 <MediaQuery query="(min-width: 1051px)" let:matches>
 	{#if matches}
@@ -60,10 +61,10 @@
 
 		<OnMount>
 			<div class="default" in:fly={{ y: 200, duration: 500, delay: 750 }} id="tab-container">
-				<ul class="default" id="tabs">
+				<ul class="default text" id="tabs">
 					{#each tabs as tab, i}
 						<li
-							class="tab-button default"
+							class="tab-button default crt"
 							class:selected={selectedIdx === i}
 							role="tab"
 							on:click={selectTab}
@@ -208,33 +209,30 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		width: 7rem;
+		width: 9rem;
 		min-width: 7rem;
 		height: auto;
-		padding: 2em;
+		padding: 1em;
+		padding-left: 0;
+		padding-right: 0;
 		margin-top: 1em;
 		margin-left: 1em;
 		margin-bottom: 1em;
 		border-radius: 0.5em;
-		background-color: rgba(37, 105, 182, 0.75);
+		background-color: rgba(0, 0, 0, 0.75);
 		list-style: none;
 	}
 
 	.tab-button {
-		font-family: 'Rubik';
+		font-family: 'Menlo';
 		font-size: 1.5em;
-		color: #ffffff;
-		text-align: center;
+		color: #fc804d;
 		min-width: 7rem;
 		margin-top: 1rem;
 		margin-bottom: 1rem;
-		box-shadow: -1px 5px 7px 0px #093042;
-		background: linear-gradient(to bottom, #2dabf9 5%, #0688fa 100%);
-		background-color: #2dabf9;
-		border-radius: 8px;
-		border: 1px solid #0b0e07;
-		padding: 9px 2px;
-		text-align: center;
+		background: transparent;
+		padding: 9px 5px;
+		text-align: left;
 		text-decoration: none;
 		text-shadow: 0px 0px 0px #263666;
 		overflow-x: hidden;
@@ -260,6 +258,7 @@
 		flex-direction: row;
 		justify-content: space-evenly;
 		margin: auto;
+		padding: 0.5rem;
 		padding-left: 0rem;
 		padding-right: 0rem;
 	}

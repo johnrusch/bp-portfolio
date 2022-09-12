@@ -47,18 +47,15 @@
 		flex-direction: column;
 		justify-content: space-evenly;
 		align-items: center;
-		font-family: 'Rubik';
+		font-family: 'Menlo';
 		/* font-size: 1.3em; */
 		color: #ffffff;
 		text-align: center;
 		width: 40%;
 		height: 38%;
 		margin: 0.5rem;
-		box-shadow: -1px 5px 7px 0px #093042;
-		background: linear-gradient(to bottom, #2dabf9 5%, #0688fa 100%);
-		background-color: #2dabf9;
+		background: transparent;
 		border-radius: 8px;
-		border: 1px solid #0b0e07;
 		padding: 1rem;
 		text-decoration: none;
 		text-align: center;
