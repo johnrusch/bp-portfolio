@@ -11,6 +11,7 @@ export async function GET() {
     const videos = await client.fetch(`*[_type == "video"] | order(order asc)`);
     const audio = await client.fetch(`*[_type == "audio"] | order(order asc)`);
     const live = await client.fetch(`*[_type == "live"] | order(order asc)`);
+    const design = await client.fetch(`*[_type == "design"] | order(order asc)`);
 
     if (videos && audio && live) {
         return {
@@ -18,7 +19,8 @@ export async function GET() {
             body: {
                 "Video": videos,
                 "Audio": audio,
-                "Live": live
+                "Live": live,
+                "Design": design
             }
         };
     }

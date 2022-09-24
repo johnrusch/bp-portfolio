@@ -12,7 +12,9 @@
 	console.log('link', item.link);
 
 	const handleClick = () => {
-		window.open(item.link, '_blank');
+    if (item.link) {
+      window.open(item.link, '_blank');
+    } 
 	};
 </script>
 
@@ -37,7 +39,7 @@
 
 	<!-- <div class="item-info"> -->
 		<h3 class="item-title crt">{item.title}</h3>
-		<div class="item-description crt">{item.description}</div>
+		<div class="item-description crt">{item.description || ""}</div>
 	<!-- </div> -->
 </div>
 
