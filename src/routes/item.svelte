@@ -27,25 +27,25 @@
 	{:else if !item.thumbnail && item.link.includes('youtu')}
 		<img
 			src="https://img.youtube.com/vi/{item.link?.split('/').at(-1)}/hqdefault.jpg"
-			class="thumbnail"
+			class="video-thumbnail"
 			class:mobile={window.innerWidth <= 515}
 			alt="{item.title} video thumbnail"
 		/>
 	{:else}
-		<img src={urlFor(item.thumbnail).url()} class="thumbnail" alt="temp alt" />
+		<img src={urlFor(item.thumbnail).url()} class="album-thumbnail" alt="temp alt" />
 	{/if}
 
-	<div class="item-info">
+	<!-- <div class="item-info"> -->
 		<h3 class="item-title crt">{item.title}</h3>
-		<div class="item-description">{item.description}</div>
-	</div>
+		<div class="item-description crt">{item.description}</div>
+	<!-- </div> -->
 </div>
 
 <style>
 	.item-container {
 		display: flex;
 		flex-direction: column;
-		justify-content: space-evenly;
+		justify-content: space-between;
 		align-items: center;
 		font-family: 'Menlo';
 		/* font-size: 1.3em; */
@@ -65,7 +65,7 @@
 	.item-container:hover {
 		color: rgb(0, 0, 0, 1);
 		cursor: pointer;
-		background-color: #0688fa;
+		background-color: #4aabff6e;
 	}
 
 	.item-container.tablet {
@@ -96,6 +96,20 @@
 		object-fit: cover;
 	}
 
+	.video-thumbnail {
+		width: 75%;
+		height: auto;
+		border-radius: 8px;
+		object-fit: cover;
+	}
+
+  .album-thumbnail {
+    width: 70%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
 	.mobile {
 		margin: 0.5rem 1rem;
 		width: 75%;
@@ -108,6 +122,10 @@
 	.mobile:last-child {
 		margin-bottom: 0;
 	}
+
+  .mobile .album-thumbnail {
+    width: 85%;
+  }
 
 	@keyframes flicker {
     0% {

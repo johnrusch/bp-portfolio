@@ -8,6 +8,7 @@
 		{ name: 'Video', component: Video },
 		{ name: 'Audio', component: Audio },
 		{ name: 'Live', component: Live },
+		{ name: 'Design' },
 		{ name: 'Contact', component: Contact }
 	];
 </script>

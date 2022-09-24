@@ -23,10 +23,13 @@
 			if (!node.contains(event.target) && !event.target.classList.contains('tab-button')) {
 				console.log('event', event);
 				node.dispatchEvent(new CustomEvent('outclick'));
+			} else if (node.contains(event.target) && event.target.classList.contains('selected')) {
+				node.dispatchEvent(new CustomEvent('outclick'));
+				event.target.style.color = '#fc804d';
 			}
 		};
 		document.addEventListener('click', handleClick, true);
-
+		console.log('infooo', node);
 		return {
 			destroy() {
 				document.removeEventListener('click', handleClick, true);
@@ -59,34 +62,35 @@
 			src="https://s3.us-east-2.amazonaws.com/bp.house/imh+looped+(1).mp4"
 			poster="src/imhLoopedPoster.png"
 		/>
+		<div class="crt">
+			<OnMount>
+				<div class="default" in:fly={{ y: 200, duration: 500, delay: 750 }} id="tab-container">
+					<ul class="default text" id="tabs">
+						{#each tabs as tab, i}
+							<li
+								class="tab-button crt default"
+								class:selected={selectedIdx === i}
+								role="tab"
+								on:click={selectTab}
+								id={i}
+							>
+								{tab.name}
+							</li>
+						{/each}
+					</ul>
+				</div>
+			</OnMount>
 
-		<OnMount>
-			<div class="default" in:fly={{ y: 200, duration: 500, delay: 750 }} id="tab-container">
-				<ul class="default text crt" id="tabs">
-					{#each tabs as tab, i}
-						<li
-							class="tab-button default"
-							class:selected={selectedIdx === i}
-							role="tab"
-							on:click={selectTab}
-							id={i}
-						>
-							{tab.name}
-						</li>
-					{/each}
-				</ul>
-			</div>
-		</OnMount>
-
-		{#if selected}
-			<View
-				class="default"
-				items={$$props[selected.name]}
-				{clickOutside}
-				{handleClose}
-				contact={selected.name === 'Contact'}
-			/>
-		{/if}
+			{#if selected}
+				<View
+					class="default crt"
+					items={$$props[selected.name]}
+					{clickOutside}
+					{handleClose}
+					contact={selected.name === 'Contact'}
+				/>
+			{/if}
+		</div>
 	{/if}
 </MediaQuery>
 
@@ -103,30 +107,32 @@
 			src="https://s3.us-east-2.amazonaws.com/bp.house/imh+looped+(1).mp4"
 			poster="src/imhLoopedPoster.png"
 		/>
-
-		<ul class="tablet crt" id="tabs">
-			{#each tabs as tab, i}
-				<li
-					class="tab-button tablet"
-					class:selected={selectedIdx === i}
-					role="tab"
-					on:click={selectTab}
-					id={i}
-				>
-					{tab.name}
-				</li>
-			{/each}
-		</ul>
-
-		{#if selected}
-			<View
-				class="tablet"
-				items={$$props[selected.name]}
-				{clickOutside}
-				{handleClose}
-				contact={selected.name === 'Contact'}
-			/>
-		{/if}
+		<div class="crt">
+			<OnMount>
+				<ul class="tablet crt" id="tabs">
+					{#each tabs as tab, i}
+						<li
+							class="tab-button crt tablet"
+							class:selected={selectedIdx === i}
+							role="tab"
+							on:click={selectTab}
+							id={i}
+						>
+							{tab.name}
+						</li>
+					{/each}
+				</ul>
+			</OnMount>
+			{#if selected}
+				<View
+					class="tablet"
+					items={$$props[selected.name]}
+					{clickOutside}
+					{handleClose}
+					contact={selected.name === 'Contact'}
+				/>
+			{/if}
+		</div>
 	{/if}
 </MediaQuery>
 
@@ -143,31 +149,32 @@
 			src="https://s3.us-east-2.amazonaws.com/bp.house/imh+looped+(1).mp4"
 			poster="src/imhLoopedPoster.png"
 		/>
-
-		<OnMount>
-			<ul class="mobile crt" id="tabs">
-				{#each tabs as tab, i}
-					<li
-						class="tab-button mobile"
-						class:selected={selectedIdx === i}
-						role="tab"
-						on:click={selectTab}
-						id={i}
-					>
-						{tab.name}
-					</li>
-				{/each}
-			</ul>
-		</OnMount>
-		{#if selected}
-			<View
-				class="mobile"
-				items={$$props[selected.name]}
-				{clickOutside}
-				{handleClose}
-				contact={selected.name === 'Contact'}
-			/>
-		{/if}
+		<div class="crt">
+			<OnMount>
+				<ul class="mobile crt" id="tabs">
+					{#each tabs as tab, i}
+						<li
+							class="tab-button crt mobile"
+							class:selected={selectedIdx === i}
+							role="tab"
+							on:click={selectTab}
+							id={i}
+						>
+							{tab.name}
+						</li>
+					{/each}
+				</ul>
+			</OnMount>
+			{#if selected}
+				<View
+					class="mobile"
+					items={$$props[selected.name]}
+					{clickOutside}
+					{handleClose}
+					contact={selected.name === 'Contact'}
+				/>
+			{/if}
+		</div>
 	{/if}
 </MediaQuery>
 
@@ -268,7 +275,9 @@
 		position: fixed;
 		left: 0;
 		bottom: 0;
+		right: 0;
 		width: 100%;
+		/* min-width: 360px; */
 		height: 10vh;
 		overflow: hidden;
 		flex-direction: row;
@@ -280,18 +289,26 @@
 
 	.tablet.tab-button {
 		width: 20%;
+		min-width: 3rem;
 		height: auto;
+		text-align: center;
+		font-size: 1.3em;
 	}
 
 	.mobile.tab-button {
-		width: 10%;
-		min-width: 6rem;
+		/* width: 10%; */
+		min-width: 3rem;
+		color: #fc804d;
 		height: auto;
 		margin: 0;
+		padding-left: 0;
+		padding-right: 0;
 		background: transparent;
 		background-repeat: no-repeat;
 		border: none;
 		flex: 1;
+		font-size: 2.2vh;
+		text-align: center;
 	}
 
 	.mobile.tab-button.selected {
@@ -479,5 +496,6 @@
 	}
 	.crt {
 		animation: textShadow 1.6s infinite;
+		/* z-index: 120; */
 	}
 </style>
