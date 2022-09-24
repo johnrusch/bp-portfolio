@@ -60,6 +60,7 @@
 		text-decoration: none;
 		text-align: center;
 		text-shadow: 0px 0px 0px #263666;
+    /* overflow: hidden; */
 	}
 
 	.item-container:hover {
@@ -70,7 +71,13 @@
 
 	.item-container.tablet {
 		padding: 0.5rem;
+    min-height: 50%;
 	}
+
+  .item-container.mobile {
+    padding: 0.5rem;
+    min-height: 30%;
+  }
 
 	.item-info {
 		display: flex;
@@ -104,7 +111,7 @@
 	}
 
   .album-thumbnail {
-    width: 70%;
+    width: 65%;
     height: auto;
     border-radius: 8px;
     object-fit: cover;
