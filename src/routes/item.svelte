@@ -53,6 +53,7 @@
 		text-align: center;
 		width: 40%;
 		height: 38%;
+    /* min-height: 50%; */
 		margin: 0.5rem;
 		background: transparent;
 		border-radius: 8px;
@@ -76,7 +77,7 @@
 
   .item-container.mobile {
     padding: 0.5rem;
-    min-height: 30%;
+    /* min-height: 30%; */
   }
 
 	.item-info {
