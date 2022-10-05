@@ -326,28 +326,28 @@
 			opacity: 0.23604;
 		}
 		15% {
-			opacity: 0.90626;
+			opacity: 0.27861;
 		}
 		20% {
 			opacity: 0.18128;
 		}
 		25% {
-			opacity: 0.83891;
+			opacity: 0.23604;
 		}
 		30% {
-			opacity: 0.65583;
+			opacity: 0.26559;
 		}
 		35% {
-			opacity: 0.67807;
+			opacity: 0.37288;
 		}
 		40% {
 			opacity: 0.26559;
 		}
 		45% {
-			opacity: 0.84693;
+			opacity: 0.24387;
 		}
 		50% {
-			opacity: 0.96019;
+			opacity: 0.20313;
 		}
 		55% {
 			opacity: 0.08594;
@@ -356,22 +356,22 @@
 			opacity: 0.20313;
 		}
 		65% {
-			opacity: 0.71988;
+			opacity: 0.37288;
 		}
 		70% {
-			opacity: 0.53455;
+			opacity: 0.36108;
 		}
 		75% {
 			opacity: 0.37288;
 		}
 		80% {
-			opacity: 0.71428;
+			opacity: 0.24387;
 		}
 		85% {
-			opacity: 0.70419;
+			opacity: 0.20313;
 		}
 		90% {
-			opacity: 0.7003;
+			opacity: 0.24387;
 		}
 		95% {
 			opacity: 0.36108;
@@ -380,6 +380,7 @@
 			opacity: 0.24387;
 		}
 	}
+	
 	@keyframes textShadow {
 		0% {
 			text-shadow: 0.4389924193300864px 0 1px rgba(0, 30, 255, 0.5),
@@ -478,7 +479,7 @@
 		opacity: 0;
 		z-index: 2;
 		pointer-events: none;
-		animation: flicker 0.2s infinite;
+		animation: flicker 0.3s infinite;
 	}
 	.crt::before {
 		content: ' ';
