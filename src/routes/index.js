@@ -1,4 +1,5 @@
 import sanityClient from '@sanity/client';
+import imageUrlBuilder from '@sanity/image-url';
 
 export const client = sanityClient({
     projectId: "tun1nqnk",
@@ -7,11 +8,25 @@ export const client = sanityClient({
     useCdn: false
   });
 
+const builder = imageUrlBuilder(client);
+
+function urlFor(source) {
+    return builder.image(source);
+}
+
 export async function GET() {
     const videos = await client.fetch(`*[_type == "video"] | order(order asc)`);
     const audio = await client.fetch(`*[_type == "audio"] | order(order asc)`);
     const live = await client.fetch(`*[_type == "live"] | order(order asc)`);
     const design = await client.fetch(`*[_type == "design"] | order(order asc)`);
+
+    for (const item of audio) {
+        item.thumbnail = urlFor(item.thumbnail).url();
+    }
+
+    for (const item of design) {
+        item.thumbnail = urlFor(item.thumbnail).url();
+    }
 
     if (videos && audio && live) {
         return {

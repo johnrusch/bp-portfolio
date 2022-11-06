@@ -1,7 +1,15 @@
 <script>
 	import imageUrlBuilder from '@sanity/image-url';
 	import { client } from './index.js';
-	export let item;
+	import { scale } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
+	import { createEventDispatcher, onDestroy } from 'svelte';
+	import { element_is } from 'svelte/internal';
+	export let item, id, designItem, selected, containerElement;
+
+	let scaleAmountX, scaleAmountY;
+
+	let el;
 
 	const builder = imageUrlBuilder(client);
 
@@ -9,21 +17,43 @@
 		return builder.image(source);
 	}
 
-	console.log('link', item.link);
+	console.log('thumbnail ', item.thumbnail);
+
+	const dispatch = createEventDispatcher();
 
 	const handleClick = () => {
-    if (item.link) {
-      window.open(item.link, '_blank');
-    } 
+		if (item.link) {
+			window.open(item.link, '_blank');
+		}
+
+		if (designItem) {
+			if (!isSelected) {
+				dispatch('design', { selected: id });
+			} else {
+				dispatch('design', { selected: null });
+			}
+		}
 	};
+
+	const handleClose = (element) => {
+		console.log('do nothing');
+	};
+
+	$: isSelected = id === selected;
 </script>
 
 <div
+	bind:this={el}
 	class="item-container"
+	class:isSelected
 	class:mobile={window.innerWidth <= 515}
 	class:tablet={window.innerWidth <= 1050}
 	on:click={handleClick}
+	transition:scale={{ duration: 500, delay: 500, opacity: 0.5, start: 0.5, easing: quintOut }}
 >
+	{#if isSelected}
+		<div class="crt" id="close-icon" on:click={() => handleClose(itemElement)}>x</div>
+	{/if}
 	{#if !item.thumbnail && !item.link.includes('youtu')}
 		<img src="src/imhLoopedPoster.png" class="thumbnail" alt="{item.title} thumbnail" />
 	{:else if !item.thumbnail && item.link.includes('youtu')}
@@ -34,12 +64,12 @@
 			alt="{item.title} video thumbnail"
 		/>
 	{:else}
-		<img src={urlFor(item.thumbnail).url()} class="album-thumbnail" alt="temp alt" />
+		<img src={item.thumbnail} class="album-thumbnail" alt="temp alt" />
 	{/if}
 
 	<!-- <div class="item-info"> -->
-		<h3 class="item-title crt">{item.title}</h3>
-		<div class="item-description crt">{item.description || ""}</div>
+	<h3 class="item-title crt">{item.title || ''}</h3>
+	<div class="item-description crt">{item.description || ''}</div>
 	<!-- </div> -->
 </div>
 
@@ -55,7 +85,7 @@
 		text-align: center;
 		width: 40%;
 		height: 38%;
-    /* min-height: 50%; */
+		/* min-height: 50%; */
 		margin: 0.5rem;
 		background: transparent;
 		border-radius: 8px;
@@ -63,7 +93,34 @@
 		text-decoration: none;
 		text-align: center;
 		text-shadow: 0px 0px 0px #263666;
-    /* overflow: hidden; */
+		transition: all 0.2s ease-in-out;
+		/* overflow: hidden; */
+	}
+
+	.item-container:hover {
+		backdrop-filter: blur(3px);
+	}
+
+	#close-icon {
+		position: absolute;
+		top: 0;
+		right: 0;
+		margin: 0.5rem;
+		/* font-size: 1.5em; */
+		color: #6b6b6b;
+	}
+
+	.isSelected {
+		transform: scale(2.3);
+		position: fixed;
+		transform-origin: 0 0;
+		opacity: 2;
+		top: 0vh;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 100;
+		overflow: scroll;
 	}
 
 	.item-container:hover {
@@ -74,13 +131,13 @@
 
 	.item-container.tablet {
 		padding: 0.5rem;
-    min-height: 50%;
+		min-height: 50%;
 	}
 
-  .item-container.mobile {
-    padding: 0.5rem;
-    /* min-height: 30%; */
-  }
+	.item-container.mobile {
+		padding: 0.5rem;
+		/* min-height: 30%; */
+	}
 
 	.item-info {
 		display: flex;
@@ -113,16 +170,27 @@
 		object-fit: cover;
 	}
 
-  .album-thumbnail {
-    width: 65%;
-    height: auto;
-    border-radius: 8px;
-    object-fit: cover;
-  }
+	.album-thumbnail {
+		width: 65%;
+		height: auto;
+		border-radius: 8px;
+		object-fit: cover;
+	}
 
 	.mobile {
 		margin: 0.5rem 1rem;
 		width: 75%;
+	}
+
+	.mobile.isSelected {
+		transform: scale(1.8);
+		margin: 0;
+		top: 50%;
+		width: 100%;
+		height: 100%;
+		-ms-transform: translateY(-50%);
+		transform: translateY(-50%);
+		justify-content: center;
 	}
 
 	.mobile:first-child {
@@ -133,9 +201,9 @@
 		margin-bottom: 0;
 	}
 
-  .mobile .album-thumbnail {
-    width: 85%;
-  }
+	.mobile .album-thumbnail {
+		width: 85%;
+	}
 
 	@keyframes flicker {
 		0% {
@@ -202,72 +270,93 @@
 			opacity: 0.24387;
 		}
 	}
-  @keyframes textShadow {
-    0% {
-      text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    5% {
-      text-shadow: 2.7928974010788217px 0 1px rgba(0,30,255,0.5), -2.7928974010788217px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    10% {
-      text-shadow: 0.02956275843481219px 0 1px rgba(0,30,255,0.5), -0.02956275843481219px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    15% {
-      text-shadow: 0.40218538552878136px 0 1px rgba(0,30,255,0.5), -0.40218538552878136px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    20% {
-      text-shadow: 3.4794037899852017px 0 1px rgba(0,30,255,0.5), -3.4794037899852017px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    25% {
-      text-shadow: 1.6125630401149584px 0 1px rgba(0,30,255,0.5), -1.6125630401149584px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    30% {
-      text-shadow: 0.7015590085143956px 0 1px rgba(0,30,255,0.5), -0.7015590085143956px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    35% {
-      text-shadow: 3.896914047650351px 0 1px rgba(0,30,255,0.5), -3.896914047650351px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    40% {
-      text-shadow: 3.870905614848819px 0 1px rgba(0,30,255,0.5), -3.870905614848819px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    45% {
-      text-shadow: 2.231056963361899px 0 1px rgba(0,30,255,0.5), -2.231056963361899px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    50% {
-      text-shadow: 0.08084290417898504px 0 1px rgba(0,30,255,0.5), -0.08084290417898504px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    55% {
-      text-shadow: 2.3758461067427543px 0 1px rgba(0,30,255,0.5), -2.3758461067427543px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    60% {
-      text-shadow: 2.202193051050636px 0 1px rgba(0,30,255,0.5), -2.202193051050636px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    65% {
-      text-shadow: 2.8638780614874975px 0 1px rgba(0,30,255,0.5), -2.8638780614874975px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    70% {
-      text-shadow: 0.48874025155497314px 0 1px rgba(0,30,255,0.5), -0.48874025155497314px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    75% {
-      text-shadow: 1.8948491305757957px 0 1px rgba(0,30,255,0.5), -1.8948491305757957px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    80% {
-      text-shadow: 0.0833037308038857px 0 1px rgba(0,30,255,0.5), -0.0833037308038857px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    85% {
-      text-shadow: 0.09769827255241735px 0 1px rgba(0,30,255,0.5), -0.09769827255241735px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    90% {
-      text-shadow: 3.443339761481782px 0 1px rgba(0,30,255,0.5), -3.443339761481782px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    95% {
-      text-shadow: 2.1841838852799786px 0 1px rgba(0,30,255,0.5), -2.1841838852799786px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-    100% {
-      text-shadow: 2.6208764473832513px 0 1px rgba(0,30,255,0.5), -2.6208764473832513px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-    }
-  }
-  /* .crt::after {
+	@keyframes textShadow {
+		0% {
+			text-shadow: 0.4389924193300864px 0 1px rgba(0, 30, 255, 0.5),
+				-0.4389924193300864px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		5% {
+			text-shadow: 2.7928974010788217px 0 1px rgba(0, 30, 255, 0.5),
+				-2.7928974010788217px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		10% {
+			text-shadow: 0.02956275843481219px 0 1px rgba(0, 30, 255, 0.5),
+				-0.02956275843481219px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		15% {
+			text-shadow: 0.40218538552878136px 0 1px rgba(0, 30, 255, 0.5),
+				-0.40218538552878136px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		20% {
+			text-shadow: 3.4794037899852017px 0 1px rgba(0, 30, 255, 0.5),
+				-3.4794037899852017px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		25% {
+			text-shadow: 1.6125630401149584px 0 1px rgba(0, 30, 255, 0.5),
+				-1.6125630401149584px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		30% {
+			text-shadow: 0.7015590085143956px 0 1px rgba(0, 30, 255, 0.5),
+				-0.7015590085143956px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		35% {
+			text-shadow: 3.896914047650351px 0 1px rgba(0, 30, 255, 0.5),
+				-3.896914047650351px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		40% {
+			text-shadow: 3.870905614848819px 0 1px rgba(0, 30, 255, 0.5),
+				-3.870905614848819px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		45% {
+			text-shadow: 2.231056963361899px 0 1px rgba(0, 30, 255, 0.5),
+				-2.231056963361899px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		50% {
+			text-shadow: 0.08084290417898504px 0 1px rgba(0, 30, 255, 0.5),
+				-0.08084290417898504px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		55% {
+			text-shadow: 2.3758461067427543px 0 1px rgba(0, 30, 255, 0.5),
+				-2.3758461067427543px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		60% {
+			text-shadow: 2.202193051050636px 0 1px rgba(0, 30, 255, 0.5),
+				-2.202193051050636px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		65% {
+			text-shadow: 2.8638780614874975px 0 1px rgba(0, 30, 255, 0.5),
+				-2.8638780614874975px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		70% {
+			text-shadow: 0.48874025155497314px 0 1px rgba(0, 30, 255, 0.5),
+				-0.48874025155497314px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		75% {
+			text-shadow: 1.8948491305757957px 0 1px rgba(0, 30, 255, 0.5),
+				-1.8948491305757957px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		80% {
+			text-shadow: 0.0833037308038857px 0 1px rgba(0, 30, 255, 0.5),
+				-0.0833037308038857px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		85% {
+			text-shadow: 0.09769827255241735px 0 1px rgba(0, 30, 255, 0.5),
+				-0.09769827255241735px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		90% {
+			text-shadow: 3.443339761481782px 0 1px rgba(0, 30, 255, 0.5),
+				-3.443339761481782px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		95% {
+			text-shadow: 2.1841838852799786px 0 1px rgba(0, 30, 255, 0.5),
+				-2.1841838852799786px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+		100% {
+			text-shadow: 2.6208764473832513px 0 1px rgba(0, 30, 255, 0.5),
+				-2.6208764473832513px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+		}
+	}
+	/* .crt::after {
     content: " ";
     display: block;
     position: absolute;
@@ -296,7 +385,7 @@
     pointer-events: none;
 	overflow: scroll;
   } */
-  .crt {
-    animation: textShadow 1.6s infinite;
-  }
+	.crt {
+		animation: textShadow 1.6s infinite;
+	}
 </style>
