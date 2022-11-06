@@ -43,8 +43,8 @@
 		selectedIdx = null;
 	};
 
-	let videos = $$props;
-	console.log('ITEMS', videos);
+	let items = $$props;
+	console.log("items", items);
 </script>
 
 <svelte:body class="crt" />
@@ -84,10 +84,11 @@
 			{#if selected}
 				<View
 					class="default crt"
-					items={$$props[selected.name]}
+					items={items[selected.name]}
 					{clickOutside}
 					{handleClose}
 					contact={selected.name === 'Contact'}
+					design={selected.name === 'Design'}
 				/>
 			{/if}
 		</div>
@@ -130,6 +131,7 @@
 					{clickOutside}
 					{handleClose}
 					contact={selected.name === 'Contact'}
+					design={selected.name === 'Design'}
 				/>
 			{/if}
 		</div>
@@ -172,6 +174,7 @@
 					{clickOutside}
 					{handleClose}
 					contact={selected.name === 'Contact'}
+					design={selected.name === 'Design'}
 				/>
 			{/if}
 		</div>
