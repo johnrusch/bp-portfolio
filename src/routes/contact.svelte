@@ -5,9 +5,6 @@
 </script>
 
 <slot>
-	<!-- default -->
-	<!-- <MediaQuery query="(min-width: 1051px)" let:matches>
-		{#if matches} -->
 			<div
 				use:clickOutside
 				on:outclick={handleClose}
@@ -21,39 +18,6 @@
 				<br />
 				<h2>tboonep@gmail.com</h2>
 			</div>
-		<!-- {/if}
-	</MediaQuery> -->
-
-	<!-- tablet -->
-	<!-- <MediaQuery query="(min-width: 516px) and (max-width: 1050px)" let:matches>
-		{#if matches}
-			<div
-				in:fly={{ y: -200, duration: 1000 }}
-				out:fade={{ duration: 250 }}
-				class="container tablet"
-			>
-				<h2>All inquiries can be sent to:</h2>
-				<br />
-				<h2>tboonep@gmail.com</h2>
-			</div>
-		{/if}
-	</MediaQuery> -->
-
-	<!-- mobile -->
-	<!-- <MediaQuery query="(max-width: 515px)" let:matches>
-		{#if matches}
-			<div
-				in:fly={{ y: -200, duration: 1000 }}
-				out:fade={{ duration: 250 }}
-				class="container mobile"
-			>
-				<h2>All inquiries can be sent to:</h2>
-				<br />
-				<h2>tboonep@gmail.com</h2>
-			</div>
-		{/if}
-	</MediaQuery> -->
-
 </slot>
 
 <style>

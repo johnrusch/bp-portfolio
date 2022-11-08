@@ -2,7 +2,7 @@
 	import { fly, fade } from 'svelte/transition';
 	import Item from './item.svelte';
 	import { onDestroy } from 'svelte';
-	export let items, clickOutside, handleClose, contact, design;
+	export let clickOutside, handleClose, contact, design;
 
 	let selected;
 
@@ -22,6 +22,9 @@
 		console.log('destroyed');
 		selected = null;
 	});
+
+	console.log("props", $$props);
+	$: items = $$props.items;
 </script>
 
 <slot>

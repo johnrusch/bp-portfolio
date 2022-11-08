@@ -12,7 +12,7 @@
 		if (!event.target.classList.contains('selected')) {
 			selected = tabs[event.srcElement.id];
 			selectedIdx = parseInt(event.srcElement.id);
-			console.log('SELECTED IDX', selected.name);
+			console.log('SELECTED IDX', selected);
 		} else {
 			handleClose();
 		}
@@ -45,6 +45,7 @@
 
 	let items = $$props;
 	console.log("items", items);
+	
 </script>
 
 <svelte:body class="crt" />

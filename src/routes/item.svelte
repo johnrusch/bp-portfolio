@@ -1,23 +1,16 @@
 <script>
 	import imageUrlBuilder from '@sanity/image-url';
-	import { client } from './index.js';
-	import { scale } from 'svelte/transition';
+	import client from '../sanityClient';
+	import { fade, scale } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import { createEventDispatcher, onDestroy } from 'svelte';
-	import { element_is } from 'svelte/internal';
 	export let item, id, designItem, selected, containerElement;
-
-	let scaleAmountX, scaleAmountY;
-
-	let el;
 
 	const builder = imageUrlBuilder(client);
 
 	function urlFor(source) {
 		return builder.image(source);
 	}
-
-	console.log('thumbnail ', item.thumbnail);
 
 	const dispatch = createEventDispatcher();
 
@@ -35,25 +28,26 @@
 		}
 	};
 
-	const handleClose = (element) => {
-		console.log('do nothing');
-	};
+	onDestroy(() => {
+		console.log('destroyed', item.title);
+		document.querySelector('.item-container')?.classList.remove('isSelected');
+	});
 
 	$: isSelected = id === selected;
+	console.log("is selected: ", isSelected);
 </script>
 
 <div
-	bind:this={el}
 	class="item-container"
 	class:isSelected
 	class:mobile={window.innerWidth <= 515}
 	class:tablet={window.innerWidth <= 1050}
 	on:click={handleClick}
-	transition:scale={{ duration: 500, delay: 500, opacity: 0.5, start: 0.5, easing: quintOut }}
+	transition:fade={{ duration: 500, delay: 500, opacity: 0.5, start: 0.5, easing: quintOut }}
 >
-	{#if isSelected}
+	<!-- {#if isSelected}
 		<div class="crt" id="close-icon" on:click={() => handleClose(itemElement)}>x</div>
-	{/if}
+	{/if} -->
 	{#if !item.thumbnail && !item.link.includes('youtu')}
 		<img src="src/imhLoopedPoster.png" class="thumbnail" alt="{item.title} thumbnail" />
 	{:else if !item.thumbnail && item.link.includes('youtu')}
@@ -66,6 +60,8 @@
 	{:else}
 		<img src={item.thumbnail} class="album-thumbnail" alt="temp alt" />
 	{/if}
+
+
 
 	<!-- <div class="item-info"> -->
 	<h3 class="item-title crt">{item.title || ''}</h3>
