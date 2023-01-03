@@ -110,6 +110,7 @@
 		overflow-x: hidden;
 	}
 
+
 	.tablet,
 	.mobile {
 		left: 0;

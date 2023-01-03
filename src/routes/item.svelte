@@ -20,11 +20,12 @@
 		}
 
 		if (designItem) {
-			if (!isSelected) {
-				dispatch('design', { selected: id });
-			} else {
-				dispatch('design', { selected: null });
-			}
+			window.open(item.thumbnail, '_blank');
+			// if (!isSelected) {
+			// 	dispatch('design', { selected: id });
+			// } else {
+			// 	dispatch('design', { selected: null });
+			// }
 		}
 	};
 
@@ -86,7 +87,7 @@
 		text-align: center;
 		width: 40%;
 		height: auto;
-		margin: 1rem;
+		margin: .5rem;
 		background: transparent;
 		border-radius: 8px;
 		padding: 1rem;
@@ -95,6 +96,7 @@
 		text-shadow: 0px 0px 0px #263666;
 		transition: all 0.2s ease-in-out;
 		text-overflow: ellipsis;
+		/* flex-basis: 25%; */
 	}
 
 	.isSelected {
