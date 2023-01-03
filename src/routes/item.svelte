@@ -66,12 +66,12 @@
 		<img src={item.thumbnail} class="album-thumbnail" alt="temp alt" />
 	{/if}
 
-	<!-- <div class="item-info"> -->
-	{#if !isSelected}
-		<h3 class="item-title crt">{item.title || ''}</h3>
-		<div class="item-description crt">{item.description || ''}</div>
-	{/if}
-	<!-- </div> -->
+	<div class="item-info">
+		{#if !isSelected}
+			<h3 class="item-title crt">{item.title || ''}</h3>
+			<div class="item-description crt">{item.description || ''}</div>
+		{/if}
+	</div>
 </div>
 
 <style>
@@ -85,9 +85,8 @@
 		color: #ffffff;
 		text-align: center;
 		width: 40%;
-		height: 38%;
-		/* min-height: 50%; */
-		margin: 0.5rem;
+		height: auto;
+		margin: 1rem;
 		background: transparent;
 		border-radius: 8px;
 		padding: 1rem;
@@ -95,16 +94,7 @@
 		text-align: center;
 		text-shadow: 0px 0px 0px #263666;
 		transition: all 0.2s ease-in-out;
-		/* overflow: hidden; */
-	}
-
-	#close-icon {
-		position: absolute;
-		top: 0;
-		right: 0;
-		margin: 0.5rem;
-		/* font-size: 1.5em; */
-		color: #6b6b6b;
+		text-overflow: ellipsis;
 	}
 
 	.isSelected {
@@ -140,8 +130,12 @@
 		padding: 0.5rem;
 	}
 
+	.item-info {
+		padding: 10px;
+	}
+
 	.item-title {
-		margin: 0;
+		margin: 10px;
 	}
 
 	.item-description {
