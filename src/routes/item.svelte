@@ -69,7 +69,7 @@
 
 	<div class="item-info">
 		{#if !isSelected}
-			<h3 class="item-title crt">{item.title || ''}</h3>
+			<div class="item-title crt">{item.title || ''}</div>
 			<div class="item-description crt">{item.description || ''}</div>
 		{/if}
 	</div>
@@ -137,6 +137,7 @@
 	}
 
 	.item-title {
+		font-weight: bold;
 		margin: 10px;
 	}
 
