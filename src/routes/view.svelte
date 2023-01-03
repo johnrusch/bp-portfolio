@@ -75,6 +75,12 @@
 </slot>
 
 <style>
+	*::-webkit-scrollbar {
+		display: none;
+		-ms-overflow-style: none;  /* IE and Edge */
+  		scrollbar-width: none;  /* Firefox */
+	}
+
 	#contact-email {
 		color: #fc804d;
 		font-family: 'Menlo';

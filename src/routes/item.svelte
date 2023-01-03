@@ -50,7 +50,11 @@
 		<div class="crt" id="close-icon" on:click={() => handleClose(itemElement)}>x</div>
 	{/if} -->
 	{#if !item.thumbnail && !item.link.includes('youtu')}
-		<img src="https://s3.us-east-2.amazonaws.com/bp.house/imhLoopedPoster.jpg" class="thumbnail" alt="{item.title} thumbnail" />
+		<img
+			src="https://s3.us-east-2.amazonaws.com/bp.house/imhLoopedPoster.jpg"
+			class="thumbnail"
+			alt="{item.title} thumbnail"
+		/>
 	{:else if !item.thumbnail && item.link.includes('youtu')}
 		<img
 			src="https://img.youtube.com/vi/{item.link?.split('/').at(-1)}/hqdefault.jpg"
@@ -62,11 +66,11 @@
 		<img src={item.thumbnail} class="album-thumbnail" alt="temp alt" />
 	{/if}
 
-
-
 	<!-- <div class="item-info"> -->
-	<h3 class="item-title crt">{item.title || ''}</h3>
-	<div class="item-description crt">{item.description || ''}</div>
+	{#if !isSelected}
+		<h3 class="item-title crt">{item.title || ''}</h3>
+		<div class="item-description crt">{item.description || ''}</div>
+	{/if}
 	<!-- </div> -->
 </div>
 
@@ -94,10 +98,6 @@
 		/* overflow: hidden; */
 	}
 
-	.item-container:hover {
-		backdrop-filter: blur(3px);
-	}
-
 	#close-icon {
 		position: absolute;
 		top: 0;
@@ -117,13 +117,18 @@
 		right: 0;
 		bottom: 0;
 		z-index: 100;
-		overflow: scroll;
+		overflow: hidden;
+		backdrop-filter: blur(3px);
 	}
 
 	.item-container:hover {
 		color: rgb(0, 0, 0, 1);
 		cursor: pointer;
 		background-color: #4aabff6e;
+	}
+
+	.isSelected:hover {
+		background-color: none !important;
 	}
 
 	.item-container.tablet {
@@ -133,16 +138,6 @@
 
 	.item-container.mobile {
 		padding: 0.5rem;
-		/* min-height: 30%; */
-	}
-
-	.item-info {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		align-items: center;
-		width: 100%;
-		margin: 0.4rem;
 	}
 
 	.item-title {
