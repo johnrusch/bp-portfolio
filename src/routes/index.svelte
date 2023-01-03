@@ -9,6 +9,7 @@
 	let selectedIdx;
 
 	const selectTab = (event) => {
+		console.log("tab selected: ", event.detail);
 		if (!event.target.classList.contains('selected')) {
 			selected = tabs[event.srcElement.id];
 			selectedIdx = parseInt(event.srcElement.id);
@@ -84,6 +85,7 @@
 
 			{#if selected}
 				<View
+					selectedName={selected.name}
 					class="default crt"
 					items={items[selected.name]}
 					{clickOutside}
@@ -127,6 +129,7 @@
 			</OnMount>
 			{#if selected}
 				<View
+					selectedName={selected.name}
 					class="tablet"
 					items={$$props[selected.name]}
 					{clickOutside}
@@ -170,6 +173,7 @@
 			</OnMount>
 			{#if selected}
 				<View
+					selectedName={selected.name}
 					class="mobile"
 					items={$$props[selected.name]}
 					{clickOutside}

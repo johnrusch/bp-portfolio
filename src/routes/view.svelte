@@ -2,12 +2,12 @@
 	import { fly, fade } from 'svelte/transition';
 	import Item from './item.svelte';
 	import { onDestroy } from 'svelte';
-	export let clickOutside, handleClose, contact, design;
+	export let clickOutside, handleClose, contact, design, selectedName;
 
 	let selected;
 
 	let containerElement;
-	console.log("container", containerElement);
+	console.log('container', containerElement);
 
 	const handleClick = (e) => {
 		console.log('item clicked', e.target);
@@ -23,14 +23,13 @@
 		selected = null;
 	});
 
-	console.log("props", $$props);
+	console.log('props', $$props);
 	$: items = $$props.items;
 </script>
 
 <slot>
 	{#if !contact}
 		<div
-			bind:this={containerElement}
 			use:clickOutside
 			on:outclick={handleClose}
 			in:fly={{ y: -200, duration: 1000 }}
@@ -42,16 +41,18 @@
 		>
 			{#if items}
 				{#each items as item}
-					<Item
-						class="text"
-						designItem={design}
-						id={item._id}
-						{item}
-						{selected}
-						{containerElement}
-						on:click={handleClick}
-						on:design={selectDesignItem}
-					/>
+					<!-- {#if item._type === selectedName} -->
+						<Item
+							class="text"
+							designItem={design}
+							id={item._id}
+							{item}
+							{selected}
+							{containerElement}
+							on:click={handleClick}
+							on:design={selectDesignItem}
+						/>
+					<!-- {/if} -->
 				{/each}
 			{/if}
 		</div>
@@ -123,7 +124,7 @@
 	}
 
 	.isSelected {
-		transform: scale(.95);
+		transform: scale(0.95);
 		background: #0688fa;
 		opacity: 2;
 		height: 100%;

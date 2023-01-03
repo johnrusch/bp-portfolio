@@ -21,8 +21,8 @@ export async function GET() {
 	for (const item of audio) {
 		item.thumbnail = urlFor(item.thumbnail).auto("format").url();
 	}
-
-	if (videos && audio && live) {
+	
+	if (videos && audio && live && design) {
 		return {
 			status: 200,
 			body: {

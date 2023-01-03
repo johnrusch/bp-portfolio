@@ -33,8 +33,9 @@
 		document.querySelector('.item-container')?.classList.remove('isSelected');
 	});
 
+	console.log('item', item);
+
 	$: isSelected = id === selected;
-	console.log("is selected: ", isSelected);
 </script>
 
 <div
@@ -49,7 +50,7 @@
 		<div class="crt" id="close-icon" on:click={() => handleClose(itemElement)}>x</div>
 	{/if} -->
 	{#if !item.thumbnail && !item.link.includes('youtu')}
-		<img src="src/imhLoopedPoster.png" class="thumbnail" alt="{item.title} thumbnail" />
+		<img src="https://s3.us-east-2.amazonaws.com/bp.house/imhLoopedPoster.jpg" class="thumbnail" alt="{item.title} thumbnail" />
 	{:else if !item.thumbnail && item.link.includes('youtu')}
 		<img
 			src="https://img.youtube.com/vi/{item.link?.split('/').at(-1)}/hqdefault.jpg"
