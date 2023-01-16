@@ -29,13 +29,6 @@
 		}
 	};
 
-	onDestroy(() => {
-		console.log('destroyed', item.title);
-		document.querySelector('.item-container')?.classList.remove('isSelected');
-	});
-
-	console.log('item', item);
-
 	$: isSelected = id === selected;
 </script>
 
@@ -50,13 +43,9 @@
 	<!-- {#if isSelected}
 		<div class="crt" id="close-icon" on:click={() => handleClose(itemElement)}>x</div>
 	{/if} -->
-	{#if !item.thumbnail && !item.link.includes('youtu')}
-		<img
-			src="https://s3.us-east-2.amazonaws.com/bp.house/imhLoopedPoster.jpg"
-			class="thumbnail"
-			alt="{item.title} thumbnail"
-		/>
-	{:else if !item.thumbnail && item.link.includes('youtu')}
+	{#if item.thumbnail}
+		<img src={item.thumbnail} class="album-thumbnail" alt="{item.title} cover" />
+	{:else if item.link.includes('youtu')}
 		<img
 			src="https://img.youtube.com/vi/{item.link?.split('/').at(-1)}/hqdefault.jpg"
 			class="video-thumbnail"
@@ -64,7 +53,11 @@
 			alt="{item.title} video thumbnail"
 		/>
 	{:else}
-		<img src={item.thumbnail} class="album-thumbnail" alt="temp alt" />
+		<img
+			src="https://s3.us-east-2.amazonaws.com/bp.house/imhLoopedPoster.jpg"
+			class="thumbnail"
+			alt="{item.title} thumbnail"
+		/>
 	{/if}
 
 	<div class="item-info">
@@ -87,7 +80,7 @@
 		text-align: center;
 		width: 40%;
 		height: auto;
-		margin: .5rem;
+		margin: 0.5rem;
 		background: transparent;
 		border-radius: 8px;
 		padding: 1rem;

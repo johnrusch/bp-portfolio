@@ -18,6 +18,12 @@ export async function GET() {
 		item.thumbnail = urlFor(item.thumbnail).auto("format").url();
 	}
 
+	for (const item of videos) {
+		if (item.thumbnail) {
+			item.thumbnail = urlFor(item.thumbnail).auto("format").url();
+		}
+	}
+
 	for (const item of audio) {
 		item.thumbnail = urlFor(item.thumbnail).auto("format").url();
 	}
