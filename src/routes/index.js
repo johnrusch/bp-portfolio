@@ -3,10 +3,10 @@ import imageUrlBuilder from '@sanity/image-url';
 
 const builder = imageUrlBuilder(client);
 
+
 function urlFor(source) {
 	return builder.image(source);
 }
-
 
 export async function GET() {
 	const videos = await client.fetch(`*[_type == "video"] | order(order asc)`);
@@ -15,19 +15,20 @@ export async function GET() {
 	const design = await client.fetch(`*[_type == "design"] | order(order asc)`);
 
 	for (const item of design) {
-		item.thumbnail = urlFor(item.thumbnail).auto("format").url();
+		item.image = urlFor(item.thumbnail).auto("format").url();
+		item.thumbnail = urlFor(item.thumbnail).width(300).url();
 	}
 
 	for (const item of videos) {
 		if (item.thumbnail) {
-			item.thumbnail = urlFor(item.thumbnail).auto("format").url();
+			item.thumbnail = urlFor(item.thumbnail).width(300).url();
 		}
 	}
 
 	for (const item of audio) {
-		item.thumbnail = urlFor(item.thumbnail).auto("format").url();
+		item.thumbnail = urlFor(item.thumbnail).width(300).url();
 	}
-	
+
 	if (videos && audio && live && design) {
 		return {
 			status: 200,

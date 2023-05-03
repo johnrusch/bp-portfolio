@@ -20,7 +20,7 @@
 		}
 
 		if (designItem) {
-			window.open(item.thumbnail, '_blank');
+			window.open(item.image, '_blank');
 			// if (!isSelected) {
 			// 	dispatch('design', { selected: id });
 			// } else {
