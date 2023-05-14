@@ -15,8 +15,10 @@ export async function GET() {
 	const design = await client.fetch(`*[_type == "design"] | order(order asc)`);
 
 	for (const item of design) {
-		item.image = urlFor(item.thumbnail).auto("format").url();
-		item.thumbnail = urlFor(item.thumbnail).width(300).url();
+		if (item.thumbnail) {
+			item.image = urlFor(item.thumbnail).auto("format").url();
+			item.thumbnail = urlFor(item.thumbnail).width(300).url();
+		}
 	}
 
 	for (const item of videos) {
@@ -26,7 +28,9 @@ export async function GET() {
 	}
 
 	for (const item of audio) {
-		item.thumbnail = urlFor(item.thumbnail).width(300).url();
+		if (item.thumbnail) {
+			item.thumbnail = urlFor(item.thumbnail).width(300).url();
+		}
 	}
 
 	if (videos && audio && live && design) {
@@ -36,7 +40,7 @@ export async function GET() {
 				Video: videos,
 				Audio: audio,
 				Live: live,
-				Design: design
+				Image: design
 			}
 		};
 	}

@@ -4,7 +4,7 @@
 		{ name: 'Video' },
 		{ name: 'Audio' },
 		{ name: 'Live' },
-		{ name: 'Design' },
+		{ name: 'Image' },
 		{ name: 'Contact' }
 	];
 </script>

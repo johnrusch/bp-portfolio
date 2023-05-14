@@ -2,7 +2,7 @@
 	import { fly, fade } from 'svelte/transition';
 	import Item from './item.svelte';
 	import { onDestroy } from 'svelte';
-	export let clickOutside, handleClose, contact, design, selectedName;
+	export let clickOutside, handleClose, contact, image, selectedName;
 
 	let selected;
 
@@ -44,13 +44,13 @@
 					<!-- {#if item._type === selectedName} -->
 						<Item
 							class="text"
-							designItem={design}
+							imageItem={image}
 							id={item._id}
 							{item}
 							{selected}
 							{containerElement}
 							on:click={handleClick}
-							on:design={selectDesignItem}
+							on:image={selectDesignItem}
 						/>
 					<!-- {/if} -->
 				{/each}
@@ -67,9 +67,7 @@
 			class:tablet={window.innerWidth > 515 && window.innerWidth <= 1050}
 			class:default={window.innerWidth > 1050}
 		>
-			<h2 style="font-family: Menlo;">All inquiries can be sent to</h2>
-			<br />
-			<h2 id="contact-email" class="crt">tboonep@gmail.com</h2>
+			<h1 id="contact-email" class="crt">tboonep@gmail.com</h1>
 		</div>
 	{/if}
 </slot>

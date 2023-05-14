@@ -4,7 +4,7 @@
 	import { fade, scale } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import { createEventDispatcher, onDestroy } from 'svelte';
-	export let item, id, designItem, selected, containerElement;
+	export let item, id, imageItem, selected, containerElement;
 
 	const builder = imageUrlBuilder(client);
 
@@ -19,13 +19,8 @@
 			window.open(item.link, '_blank');
 		}
 
-		if (designItem) {
+		if (imageItem) {
 			window.open(item.image, '_blank');
-			// if (!isSelected) {
-			// 	dispatch('design', { selected: id });
-			// } else {
-			// 	dispatch('design', { selected: null });
-			// }
 		}
 	};
 
@@ -40,9 +35,6 @@
 	on:click={handleClick}
 	transition:fade={{ duration: 500, delay: 500, opacity: 0.5, start: 0.5, easing: quintOut }}
 >
-	<!-- {#if isSelected}
-		<div class="crt" id="close-icon" on:click={() => handleClose(itemElement)}>x</div>
-	{/if} -->
 	{#if item.thumbnail}
 		<img src={item.thumbnail} class="album-thumbnail" alt="{item.title} cover" />
 	{:else if item.link.includes('youtu')}

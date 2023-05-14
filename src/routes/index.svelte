@@ -45,10 +45,12 @@
 	};
 
 	let items = $$props;
-	console.log("items", items);
+	console.log("is", items);
 	
 </script>
+<svelte:head>
 
+</svelte:head>
 <svelte:body class="crt" />
 
 <!-- default -->
@@ -91,7 +93,7 @@
 					{clickOutside}
 					{handleClose}
 					contact={selected.name === 'Contact'}
-					design={selected.name === 'Design'}
+					image={selected.name === 'Image'}
 				/>
 			{/if}
 		</div>
@@ -135,7 +137,7 @@
 					{clickOutside}
 					{handleClose}
 					contact={selected.name === 'Contact'}
-					design={selected.name === 'Design'}
+					image={selected.name === 'Image'}
 				/>
 			{/if}
 		</div>
@@ -179,7 +181,7 @@
 					{clickOutside}
 					{handleClose}
 					contact={selected.name === 'Contact'}
-					design={selected.name === 'Design'}
+					image={selected.name === 'Image'}
 				/>
 			{/if}
 		</div>
