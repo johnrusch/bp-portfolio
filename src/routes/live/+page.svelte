@@ -2,7 +2,8 @@
 	import ContainerView from "../../components/ContainerView.svelte";
 	import Item from "../../components/Item.svelte";
 	export let data;
-	const items = data.body;
+	// const items = data.body;
+	$: items = data?.body.live;
 </script>
 
 <ContainerView>

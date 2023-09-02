@@ -22,6 +22,9 @@
 			document.removeEventListener('click', handleClickOutside);
 		};
 	});
+
+	export let data;
+	console.log("data", data);
 </script>
 
 <video
