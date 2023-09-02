@@ -1,5 +1,10 @@
 <script>
 	import { fly, fade } from 'svelte/transition';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		document.title = 'BPHouse - Contact';
+	});
 </script>
 
 <div in:fly={{ y: -200, duration: 1000 }} out:fade={{ duration: 250 }} class="contact">

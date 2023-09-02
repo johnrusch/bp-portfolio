@@ -18,6 +18,8 @@
 
 		document.addEventListener('click', handleClickOutside);
 
+		document.title = 'BPHouse';
+
 		return () => {
 			document.removeEventListener('click', handleClickOutside);
 		};
