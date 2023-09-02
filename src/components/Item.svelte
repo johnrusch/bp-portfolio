@@ -74,11 +74,6 @@
 		background-color: #4aabff6e;
 	}
 
-	.item-container.tablet {
-		padding: 0.5rem;
-		min-height: 50%;
-	}
-
 	.item-info {
 		padding: 10px;
 	}
@@ -107,14 +102,6 @@
 		height: 0;
 		padding-bottom: 100%;
 		position: relative;
-	}
-
-	.mobile:first-child {
-		margin-top: 0;
-	}
-
-	.mobile:last-child {
-		margin-bottom: 0;
 	}
 
 	@media (min-width: 1051px) {
