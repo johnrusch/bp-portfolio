@@ -8,7 +8,7 @@
 </script>
 
 <div in:fly={{ y: -200, duration: 1000 }} out:fade={{ duration: 250 }} class="contact">
-	<h1 id="contact-email" class="crt">tboonep@gmail.com</h1>
+	<h1 id="contact-email" class="crt">iamsittinginmyhouse@gmail.com</h1>
 </div>
 
 <style>
