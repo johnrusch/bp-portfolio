@@ -7,7 +7,7 @@ const builder = imageUrlBuilder(client);
  * @param {import("@sanity/image-url/lib/types/types").SanityImageSource} source
  */
 function urlFor(source) {
-	return builder.image(source);
+	return builder.image(source).auto('format');
 }
 
 // Function to fetch and process items
