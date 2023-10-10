@@ -14,7 +14,7 @@
 <style>
 	#contact-email {
 		color: #fc804d;
-		font-size: 1.5rem;
+		font-size: 1rem;
 		font-family: 'Menlo';
 	}
 
@@ -31,7 +31,7 @@
 		justify-content: space-evenly;
 		align-items: flex-start;
 		height: auto;
-		width: 60vw;
+		width: 80vw;
 		top: 40%;
 		left: 0;
 		right: 0;

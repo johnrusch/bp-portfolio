@@ -6,8 +6,8 @@
 <div class="crt">
 	<div in:fly={{ y: 200, duration: 500, delay: 750 }} id="tab-container">
 		<nav class="text" id="tabs">
-			<NavLink href="/video" title="Video" />
 			<NavLink href="/audio" title="Audio" />
+			<NavLink href="/video" title="Video" />
 			<NavLink href="/live" title="Live" />
 			<NavLink href="/contact" title="Contact" />
 		</nav>
