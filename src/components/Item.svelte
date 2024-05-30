@@ -5,10 +5,12 @@
 		if (item.thumbnail) {
 			return item.thumbnail;
 		} else if (item.link.includes('youtu')) {
-			return `https://img.youtube.com/vi/${item.link?.split('/').at(-1)}/hqdefault.jpg`;
-		} else {
-			return 'https://s3.us-east-2.amazonaws.com/bp.house/imhLoopedPoster.jpg';
+			const videoId = item.link.split('v=')[1] || item.link.split('/').pop();
+			if (videoId) {
+				return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+			}
 		}
+		return 'src/imhLoopedPoster.png';
 	};
 
 	const handleClick = () => {
@@ -23,6 +25,7 @@
 		}
 	};
 
+
 	export let item: any;
 </script>
 
@@ -35,7 +38,11 @@
 	transition:fade={{ duration: 500, delay: 500, easing: quintOut }}
 >
 	<div class="thumbnail-container">
-		<img src={getThumbnail()} class="thumbnail" alt="{item.title} thumbnail" />
+		<img
+			src={getThumbnail()}
+			class="thumbnail"
+			alt="{item.title} thumbnail"
+		/>
 	</div>
 
 	<div class="item-info crt-text">
