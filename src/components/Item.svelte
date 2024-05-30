@@ -10,7 +10,7 @@
 				return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 			}
 		}
-		return 'src/imhLoopedPoster.png';
+		return 'imhLoopedPoster.png';
 	};
 
 	const handleClick = () => {
