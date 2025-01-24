@@ -1,6 +1,18 @@
 # Changelog
 
 ## [2025-01-24]
+- Improved image loading performance
+  - Purpose: To optimize image loading and reduce initial page load time
+  - Changes:
+    - Added lazy loading and async decoding to images
+    - Optimized Sanity CDN image delivery with appropriate sizing and formats
+    - Enhanced Sanity client configuration for better CDN utilization
+  - Affected files:
+    - Modified `src/components/Item.svelte`
+    - Modified `src/routes/+layout.server.js`
+    - Modified `src/sanityClient.js`
+
+## [2025-01-24]
 - Downgraded Node.js version requirement to v18.x
   - Purpose: To ensure compatibility with SvelteKit's adapter-vercel which supports Node.js 16 or 18
   - Affected files: 

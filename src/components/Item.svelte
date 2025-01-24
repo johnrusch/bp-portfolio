@@ -42,6 +42,8 @@
 			src={getThumbnail()}
 			class="thumbnail"
 			alt="{item.title} thumbnail"
+			loading="lazy"
+			decoding="async"
 		/>
 	</div>
 

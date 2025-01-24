@@ -8,7 +8,11 @@ const builder = imageUrlBuilder(client);
  */
 function urlFor(source) {
 	try {
-		return builder.image(source).auto('format');
+		return builder.image(source)
+			.width(600) // Set a reasonable width that matches your design
+			.auto('format') // Automatically choose the best format
+			.fit('crop') // Maintain aspect ratio while filling the space
+			.quality(80); // Slightly reduce quality for better performance
 	} catch (error) {
 		console.error("ERROR BUILDING IMAGE URL: ", error);
 		return { url: '' };
